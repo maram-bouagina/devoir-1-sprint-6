@@ -13,7 +13,8 @@ public interface UserService {
 	 User findUserByUsername (String username); 
 	 Role addRole(Role role); 
 	 User addRoleToUser(String username, String rolename); 
-	 List<User> findAllUsers(); User registerUser(RegistrationRequest request);
+	 List<User> findAllUsers();
+	 User registerUser(RegistrationRequest request);
 	 void sendEmailUser(User newUser,String code);
 	 public User validateToken(String code);
 	} 

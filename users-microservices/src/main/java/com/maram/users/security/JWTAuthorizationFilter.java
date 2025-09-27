@@ -19,9 +19,18 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
+	
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
+
+        String path = request.getServletPath();
+
+        // ✅ CHANGE #1: Skip JWT verification for public endpoints
+        if (path.equals("/register") || path.equals("/login") || path.startsWith("/verifyEmail")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 		String jwt = request.getHeader("Authorization");
 		if (jwt == null || !jwt.startsWith(SecParams.PREFIX)) {
 			filterChain.doFilter(request, response);
